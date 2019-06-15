@@ -81,15 +81,7 @@ public class OrderController : MonoBehaviour
                 HumberList1.Clear();
                 isOrder[0] = false;
                 //スコア加算
-                if (HumList.Count == 1) {
-                    score.scoreNum += ONE_MATCH;
-                }
-                if (HumList.Count == 2) {
-                    score.scoreNum += TWO_MATCH;
-                }
-                if (HumList.Count == 3) {
-                    score.scoreNum += THREE_MATCH;
-                }
+                AddScore(HumList1.Count);
                 return;
             }
         }
@@ -108,15 +100,7 @@ public class OrderController : MonoBehaviour
 
                 HumberList2.Clear();
                 isOrder[1] = false;
-                if (HumList.Count == 1) {
-                    score.scoreNum += ONE_MATCH;
-                }
-                if (HumList.Count == 2) {
-                    score.scoreNum += TWO_MATCH;
-                }
-                if (HumList.Count == 3) {
-                    score.scoreNum += THREE_MATCH;
-                }
+                AddScore(HumList2.Count);
                 return;
             }
         }
@@ -135,19 +119,10 @@ public class OrderController : MonoBehaviour
 
                 HumberList3.Clear();
                 isOrder[2] = false;
-                if (HumList.Count == 1) {
-                    score.scoreNum += ONE_MATCH;
-                }
-                if (HumList.Count == 2) {
-                    score.scoreNum += TWO_MATCH;
-                }
-                if (HumList.Count == 3) {
-                    score.scoreNum += THREE_MATCH;
-                }
+                AddScore(HumList3.Count);
                 return;
             }
         }
-
         return;
 
         //ハンバーガーのlistと注文判定
@@ -181,6 +156,18 @@ public class OrderController : MonoBehaviour
             } while (true);
         }
         return orderGene;
+    }
+
+    public void AddScore(int HumberLen) {
+        if (HumberLen == 1) {
+            score.scoreNum += ONE_MATCH;
+        }
+        if (HumberLen == 2) {
+            score.scoreNum += TWO_MATCH;
+        }
+        if (HumberLen == 3) {
+            score.scoreNum += THREE_MATCH;
+        }
     }
 
     void Start()
