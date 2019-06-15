@@ -66,9 +66,6 @@ public class OrderController : MonoBehaviour
         HumList3.AddRange(HumberList3);
         HumList3.Sort();
 
-
-
-
         //注文票１と判定
         for (int i = 0; i < HumList.Count; i++) {
             if (HumList[i] == HumList1[i]) {
@@ -208,11 +205,11 @@ public class OrderController : MonoBehaviour
             isOrder[0] = true;
         }
         if (isOrder[1] == false) {
-            HumberList1.AddRange(OrderGenerate());
+            HumberList2.AddRange(OrderGenerate());
             isOrder[1] = true;
         }
         if (isOrder[2] == false) {
-            HumberList1.AddRange(OrderGenerate());
+            HumberList3.AddRange(OrderGenerate());
             isOrder[2] = true;
         }
 
