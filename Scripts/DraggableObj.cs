@@ -7,20 +7,27 @@ using UnityEngine.UI;
 
 public class DraggableObj : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDragHandler
 {
+    //ドラッグゾーンコントロール
+    //マウスにドラッグできる領域をコントロールする
+
+
+    //Prefab生成用のGameObject
+    //各パーツ分別
     public GameObject Hamburger;
-
-
     public GameObject bottom;
     public GameObject center;
     public GameObject top;
 
+    //ドラッグできる長さ制限
     public float length;
 
-    public GameObject actBurger;
-    public GameObject bottomDragging;
-    public GameObject centerDragging;
-    public GameObject topDragging;
+    //統括管理するのため指名できるための各パーツ
+    GameObject actBurger;
+    GameObject bottomDragging;
+    GameObject centerDragging;
+    GameObject topDragging;
 
+    //バンスの移動速度
     public float moveSpeed;
 
     private void Awake()
@@ -30,53 +37,73 @@ public class DraggableObj : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDr
 
     private void Update()
     {
+        float t = Time.time;
+        Debug.Log((int)t);
 
-        
     }
 
 
-
+    //ドラッグ開始
     public void OnBeginDrag(PointerEventData eventData)
     {
+        //ドラッグ開始
+        //やること：
+        //1.ハンバーガーを生成（上中下統括）
+        //2.ボトムの座標を指定
+        //3.各パーツのスクリプトにGameObjectを渡す
 
+        //ハンバーガーを生成（上中下統括）
         actBurger = Instantiate(Hamburger, this.transform);
-
-        topDragging = Instantiate(top, actBurger.transform);
-        centerDragging  = Instantiate(center, actBurger.transform);
         bottomDragging = Instantiate(bottom, actBurger.transform);
+        centerDragging = Instantiate(center, actBurger.transform);
+        topDragging = Instantiate(top, actBurger.transform);
 
-        Hamburger.GetComponent<HamburgerControl>().thisBottom = bottomDragging;
-        Hamburger.GetComponent<HamburgerControl>().thisCenter = centerDragging;
-        Hamburger.GetComponent<HamburgerControl>().thisTop    = topDragging;
 
-        topDragging.GetComponent<BunsControl>().center = centerDragging;
+        actBurger.GetComponent<HamburgerControl>().thisBottom = bottomDragging;
+        actBurger.GetComponent<HamburgerControl>().thisCenter = centerDragging;
+        actBurger.GetComponent<HamburgerControl>().thisTop = topDragging;
 
+        //ボトムの座標を指定
         bottomDragging.transform.position = eventData.position;
+
+        //各パーツのスクリプトにGameObjectを渡す
+        topDragging.GetComponent<BunsControl>().center = centerDragging;
+        topDragging.GetComponent<BunsControl>().masterBurger = actBurger.GetComponent<HamburgerControl>();
         bottomDragging.GetComponent<BunsControl>().center = centerDragging;
+        bottomDragging.GetComponent<BunsControl>().masterBurger = actBurger.GetComponent<HamburgerControl>();
+
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        //ドラッグ中
+        //やること：
+        //1.ボトムからトップまでの角度を計算してバンスコントロールに渡す
+        //2.トップとセンターの座標を指定
+
+        //ボトムからトップまでの角度を計算してバンスコントロールに渡す
         float targetAng = Mathf.Atan2(topDragging.transform.position.y - bottomDragging.transform.position.y, topDragging.transform.position.x - bottomDragging.transform.position.x);
+        topDragging.GetComponent<BunsControl>().angle = targetAng;
+        bottomDragging.GetComponent<BunsControl>().angle = targetAng;
 
+        //トップとセンターの座標を指定
         centerDragging.transform.position = Vector2.Lerp(bottomDragging.transform.position, topDragging.transform.position, 0.5f);
-
         topDragging.transform.position = Vector3.Lerp(bottomDragging.transform.position,eventData.position,length);
-        topDragging.transform.eulerAngles = (new Vector3(0.0f, 0.0f, Mathf.Rad2Deg * targetAng - 90.0f));
-
-        bottomDragging.transform.eulerAngles = (new Vector3(0.0f, 0.0f, Mathf.Rad2Deg * targetAng - 90.0f));
-
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        //ドラッグ終了
+        //やること：
+        //トップとボトムの→物理演算を許可、回転を固定、移動速度を渡す、ドラッグ終了フラグを渡す
+
         topDragging.GetComponent<Rigidbody2D>().simulated = true;
         topDragging.GetComponent<Rigidbody2D>().freezeRotation = true;
         topDragging.GetComponent<BunsControl>().isEndDrag = true;
         topDragging.GetComponent<BunsControl>().moveSpeed = moveSpeed;
 
-        bottomDragging.GetComponent<BunsControl>().isEndDrag = true;
         bottomDragging.GetComponent<Rigidbody2D>().simulated = true;
         bottomDragging.GetComponent<Rigidbody2D>().freezeRotation = true;
+        bottomDragging.GetComponent<BunsControl>().isEndDrag = true;
         bottomDragging.GetComponent<BunsControl>().moveSpeed = moveSpeed;
     }
 }
