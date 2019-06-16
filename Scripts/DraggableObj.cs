@@ -27,22 +27,11 @@ public class DraggableObj : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDr
     GameObject centerDragging;
     GameObject topDragging;
 
+    public List<GameObject> dish;
+
     //バンスの移動速度
     public float moveSpeed;
-
-    private void Awake()
-    {
-
-    }
-
-    private void Update()
-    {
-        float t = Time.time;
-        Debug.Log((int)t);
-
-    }
-
-
+    
     //ドラッグ開始
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -58,6 +47,7 @@ public class DraggableObj : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDr
         centerDragging = Instantiate(center, actBurger.transform);
         topDragging = Instantiate(top, actBurger.transform);
 
+        actBurger.GetComponent<HamburgerControl>().dish = dish;
 
         actBurger.GetComponent<HamburgerControl>().thisBottom = bottomDragging;
         actBurger.GetComponent<HamburgerControl>().thisCenter = centerDragging;

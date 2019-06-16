@@ -69,6 +69,7 @@ public class BunsControl : MonoBehaviour
             //場所を調整
             masterBurger.LineUp();
             masterBurger.angle = angle;
+            masterBurger.completeCnt = Time.time;
 
         }
 
@@ -99,7 +100,8 @@ public class BunsControl : MonoBehaviour
 
             
         }
-       
+
+
 
     }
 }

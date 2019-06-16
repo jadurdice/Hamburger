@@ -19,24 +19,35 @@ public class HamburgerControl : MonoBehaviour
     public GameObject thisCenter;
     public GameObject thisTop;
 
+    //目標の皿までたどりつく
+    public List<GameObject> dish;
+
+    //合体した後の角度
     public float angle;
 
+    //回転の速度
     public float rotSpeed;
+
+    //完成カウンター
+    public float completeCnt;
 
 
     public void LineUp()
     {
+        //整列用
+        //オブジェクトは下の方が表に出るから、完成した時は一度解体して整列をする
+
+        //解体
         thisBottom.transform.SetParent(this.transform.parent);
         thisCenter.transform.SetParent(this.transform.parent);
         thisTop.transform.SetParent(this.transform.parent);
 
+        //解体後で座標、角度調整
         this.gameObject.transform.eulerAngles = (new Vector3(0.0f, 0.0f, Mathf.Rad2Deg * angle - 90));
         thisCenter.transform.eulerAngles = (new Vector3(0.0f, 0.0f, Mathf.Rad2Deg * angle - 90));
-
         this.gameObject.transform.position = thisCenter.transform.position;
 
-
-
+        //整列
         thisBottom.transform.SetParent(this.transform);
         thisCenter.transform.SetParent(this.transform);
         thisTop.transform.SetParent(this.transform);
@@ -44,28 +55,36 @@ public class HamburgerControl : MonoBehaviour
 
     void adjustAngle()
     {
-        angle = Mathf.Lerp(angle,Mathf.Deg2Rad * 90,Time.deltaTime);
+        //完成したら一度90度にする、そのための角度計算
+        angle = Mathf.Lerp(angle,Mathf.Deg2Rad * 90,Time.deltaTime*rotSpeed);
 
-      thisCenter.transform.eulerAngles = (new Vector3(0.0f, 0.0f, Mathf.Rad2Deg * angle-90));
+        thisCenter.transform.eulerAngles = (new Vector3(0.0f, 0.0f, Mathf.Rad2Deg * angle-90));
         this.gameObject.transform.eulerAngles = (new Vector3(0.0f, 0.0f, Mathf.Rad2Deg * angle - 90));
-        //thisBottom.transform.eulerAngles = Vector3.Lerp(this.transform.eulerAngles, new Vector3(0, 0, 0), Time.deltaTime);
-        //thisCenter.transform.eulerAngles = Vector3.Lerp(this.transform.eulerAngles, new Vector3(0, 0, 90), Time.deltaTime);
-        //thisTop.transform.eulerAngles = Vector3.Lerp(this.transform.eulerAngles, new Vector3(0, 0, 0), Time.deltaTime);
-        //this.transform.eulerAngles = Vector3.Lerp(this.transform.eulerAngles, new Vector3(0, 0, 90), Time.deltaTime);
+
+        //完成カウンターしたら
+        if (Time.time >= completeCnt + 1.0f)
+        {
+            GetComponent<MoveBurger>().Active(dish[0].GetComponent<RectTransform>());
+        }
+        else
+        {
+            this.gameObject.transform.position = Vector2.Lerp(this.gameObject.transform.position, this.gameObject.transform.parent.position, Time.deltaTime * rotSpeed);
+        }
+    }
+
+    void OnBecameInvisible()
+    {
+        //見えなくなったら
+        Destroy(gameObject);
     }
 
     private void Update()
     {
+        //完成したら
         if (isComplete)
         {
-            float t = Time.time;
-            Debug.Log((int)t);
             adjustAngle();
-
         }
-
-
-
     }
 
     //食材と接続したとき、食材番号をlistに入れる
@@ -74,9 +93,6 @@ public class HamburgerControl : MonoBehaviour
         //番号を入れたらソートする
         ingrediantIncome.Add(ingNo);
         ingrediantIncome.Sort();
-
-        //デバッグ用
-        debugIngre();
     }
 
     //Listデバッグ用
