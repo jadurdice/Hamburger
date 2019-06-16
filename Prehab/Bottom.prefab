@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 622324861109356128}
   m_Layer: 9
   m_Name: Bottom
-  m_TagString: Bottom
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.49411762, g: 0.57480544, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -96,7 +96,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: bfee96970e87f72449a73a56ed1b1784, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!114 &9152699447590582237
 MonoBehaviour:
@@ -110,11 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10686576cfff3a4a81bc937de1eeaa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterBurger: {fileID: 0}
-  isEndDrag: 0
+  isDragging: 0
   center: {fileID: 0}
   moveSpeed: 5
-  angle: 0
 --- !u!61 &622324861109356128
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -128,7 +126,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 15}
+  m_Offset: {x: -0.9303894, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -139,5 +137,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 200, y: 130}
+  m_Size: {x: 198.6203, y: 100}
   m_EdgeRadius: 0
