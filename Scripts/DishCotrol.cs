@@ -8,6 +8,9 @@ public class DishCotrol : MonoBehaviour
     //注文が入ったらアニメーションをプレイ
     //注文の描画など
 
+    //注文管理スクリプト参照
+    public List<int> orderNow;
+
     Animator thisAnimator;
 
     public bool isIn;

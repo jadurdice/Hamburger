@@ -11,14 +11,11 @@ public class OrderController : MonoBehaviour
     const int TWO_MATCH = 20;
     const int THREE_MATCH = 30;
 
-    //注文票のスクリプト参照
-    public List<Order> order;
-
     //スコアスクリプト参照
     public Score score;
 
     float TimeCnt;
-    
+
     const int ORDER_NUM = 3;//注文票数
 
     const int FOOD_NUM = 3;//注文票食材数
@@ -29,13 +26,13 @@ public class OrderController : MonoBehaviour
     int[] Humber = new int[FOOD_NUM] { 1, 2, 3 };
 
     //ハンバーガー注文票
-    public List<int>[] orderList = new List<int>[3];
- 
+    public List<DishCotrol> orderList;
+
     public int FoodMin = 1;//材料先頭ＩＤ
     public int FoodMax = 3;//材料末尾ＩＤ
 
     //各注文票時間計測 時間経過でisOrderをfalse
-    int[] time = new int[ORDER_NUM] { 0, 0, 0 };
+    int[] time = new int[ORDER_NUM] { 1, 2, 3 };
 
     //注文票の状態 falseになったら注文生成
     bool[] isOrder = new bool[ORDER_NUM] { false, false, false };
@@ -48,9 +45,8 @@ public class OrderController : MonoBehaviour
             int j;
             var checkOrder = new List<int> { };
             //注文を代入、ソート
-            checkOrder.AddRange(orderList[i]);
-            checkOrder.Sort();
-
+            checkOrder = new List<int>(orderList[i].orderNow);
+ 
             if (checkOrder.Count > checkBurger.Count)
             {
                 //先に個数チェック、注文数が多い場合絶対失敗→スキップ
@@ -66,7 +62,7 @@ public class OrderController : MonoBehaviour
                     //同じだったら0にする
                     //もともと0だったらスキップ
 
-                    if(checkOrder[j] == 0)
+                    if (checkOrder[j] == 0)
                     {
                         continue;
                     }
@@ -80,13 +76,12 @@ public class OrderController : MonoBehaviour
             for (j = 0; j < checkOrder.Count; j++)
             {
                 //全部0なのかチェック
-                if(checkOrder[j] != 0)
+                if (checkOrder[j] != 0)
                 {
                     break;
                 }
             }
-            j += 1;
-
+            
             if (j != checkOrder.Count)
             {
                 //判定失敗
@@ -96,46 +91,63 @@ public class OrderController : MonoBehaviour
             {
                 //判定成功、返す
 
-                return (i + 1);
+                return (i);
             }
         }
 
-        return 0;
+        return -1;
     }
 
-    public List<int> OrderGenerate()
+    public void OrderGenerate(int slot)
     {
 
         //注文生成開始
         var orderGene = new List<int> { };
 
         //注文総数を確定
-        int orderMax = Random.Range(1, 3);
+        int orderMax = Random.Range(0, 4) ;
 
         //注文詳細生成
-        for (int i = 0; i < orderMax; i++)
+        int i = 0;
+        do
         {
 
-            do
+            int FoodCompare = Random.Range(FoodMin, FoodMax + 1);
+            if (orderGene.Count == 0)
             {
-                int FoodCompare = Random.Range(FoodMin, FoodMax);
-                int j;
-                for (j = 0; j <= orderGene.Count; j++)
+                orderGene.Add(FoodCompare);
+                i += 1;
+            }
+            else
+            {
+
+                int checkCnt = 0;
+                for (int j = 0; j < orderGene.Count; j++)
                 {
-                    if (FoodCompare == orderGene[i])
+                    if (FoodCompare == orderGene[j])
                     {
-                        break;
+                        checkCnt += 1;
                     }
                 }
-                if (FoodCompare == orderGene.Count)
+
+                if (checkCnt == 0)
                 {
-                    //全部被ってなければループ脱出
                     orderGene.Add(FoodCompare);
-                    break;
+                    i += 1;
                 }
-            } while (true);
-        }
-        return orderGene;
+
+            }
+        } while (i < orderMax);
+
+
+        orderGene.Sort();
+        debugOrder(orderGene);
+
+
+
+        orderList[slot].orderNow = new List<int>(orderGene);
+        
+        orderList[slot].isIn = true;
     }
 
     public void AddScore(int HumberLen)
@@ -144,14 +156,14 @@ public class OrderController : MonoBehaviour
         {
             case 1: score.scoreNum += ONE_MATCH; break;
             case 2: score.scoreNum += TWO_MATCH; break;
-            case 3: score.scoreNum += THREE_MATCH;break;
+            case 3: score.scoreNum += THREE_MATCH; break;
         }
-   
+
     }
 
-    void SetTimer(int orderSlot,int second)
+    void SetTimer(int orderSlot, int second)
     {
-
+        time[orderSlot] += second;
     }
 
     void TimeCount()
@@ -173,30 +185,48 @@ public class OrderController : MonoBehaviour
                     {
                         //オーダー時間切れ
                         isOrder[i] = false;
-                        orderList[i].Clear();
-                        time[i] = LimitTime/2;
+                        orderList[i].orderNow.Clear();
+                        orderList[i].isOut = true;
+
+                        SetTimer(i, LimitTime / 2);
                     }
                     else
                     {
                         //注文作成
                         isOrder[i] = true;
-                        orderList[i].AddRange(OrderGenerate());
-                        time[i] = LimitTime;
+                        OrderGenerate(i);
+                        SetTimer(i, LimitTime);
                     }
 
                 }
             }
-            
+
             TimeCnt = 0;
         }
     }
 
-    // Update is called once per frame
+    private void Start()
+    {
+
+    }
+
     void Update()
     {
         //時間計測
         TimeCount();
 
-        
+
+    }
+
+    void debugOrder(List<int> order)
+    {
+        string debugstr = "Order :";
+
+
+        foreach (int i in order)
+        {
+            debugstr = debugstr + i + ",";
+        }
+        Debug.Log(debugstr);
     }
 }

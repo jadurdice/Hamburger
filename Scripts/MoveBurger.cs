@@ -36,15 +36,21 @@ public class MoveBurger : MonoBehaviour
         RectTransform thisObj;
         thisObj = this.gameObject.GetComponent<RectTransform>();
 
-        thisObj.localPosition = Vector2.Lerp(thisObj.localPosition, new Vector2(target.localPosition.x, target.localPosition.y + thisObj.localScale.y/2), Time.deltaTime*moveSpeed);
+        thisObj.localPosition = Vector2.Lerp(thisObj.localPosition, new Vector2(target.localPosition.x, target.localPosition.y - thisObj.localScale.y), Time.deltaTime*moveSpeed);
         thisObj.localScale = Vector2.Lerp(thisObj.localScale, originalSize * shrink, Time.deltaTime*moveSpeed);
 
         moveCnt += Time.deltaTime;
 
         if(moveCnt > 1.0f)
         {
-            target.gameObject.GetComponent<Animation>().Play();
-            Debug.Log(target.gameObject.GetComponent<Animation>().isPlaying);
+            if(!target.gameObject.GetComponent<DishCotrol>())
+            {
+                target.gameObject.GetComponent<Animation>().Play();
+            }
+            else
+            {
+                target.gameObject.GetComponent<DishCotrol>().isOut = true;
+            }
         }
 
     }

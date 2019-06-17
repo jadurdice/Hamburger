@@ -48,6 +48,7 @@ public class DraggableObj : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDr
         topDragging = Instantiate(top, actBurger.transform);
 
         actBurger.GetComponent<HamburgerControl>().dish = dish;
+        actBurger.GetComponent<HamburgerControl>().masterOrder = this.gameObject.GetComponent<OrderController>();
 
         actBurger.GetComponent<HamburgerControl>().thisBottom = bottomDragging;
         actBurger.GetComponent<HamburgerControl>().thisCenter = centerDragging;

@@ -8,6 +8,8 @@ public class HamburgerControl : MonoBehaviour
     //ハンバーガー全体コントロール
     //今接続している食材を管理
 
+    public OrderController masterOrder;
+
     //食材のList
     public List<int> ingrediantIncome;
 
@@ -31,6 +33,13 @@ public class HamburgerControl : MonoBehaviour
     //完成カウンター
     public float completeCnt;
 
+    RectTransform gotoDish;
+
+    public void EnterJudge()
+    {
+        gotoDish = dish[(masterOrder.IngrediantJudge(ingrediantIncome) + 1)].GetComponent<RectTransform>();
+        Debug.Log(gotoDish);
+    }
 
     public void LineUp()
     {
@@ -64,7 +73,7 @@ public class HamburgerControl : MonoBehaviour
         //完成カウンターしたら
         if (Time.time >= completeCnt + 1.0f)
         {
-            GetComponent<MoveBurger>().Active(dish[0].GetComponent<RectTransform>());
+            GetComponent<MoveBurger>().Active(gotoDish);
         }
         else
         {
@@ -85,6 +94,12 @@ public class HamburgerControl : MonoBehaviour
         {
             adjustAngle();
         }
+
+        if(this.gameObject.transform.position.x < -50　|| this.gameObject.transform.position.x > 1000)
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     //食材と接続したとき、食材番号をlistに入れる

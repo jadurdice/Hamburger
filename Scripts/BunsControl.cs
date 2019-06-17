@@ -63,8 +63,9 @@ public class BunsControl : MonoBehaviour
 
         if(collider.transform.tag == "Bottom"|| collider.transform.tag == "Top")
         {
-            //下が上につける、総管理の完成boolをtrueにする
+            //下が上につける、総管理の完成フラグをtrueにする
             masterBurger.isComplete = true;
+            masterBurger.EnterJudge();
 
             //場所を調整
             masterBurger.LineUp();
@@ -81,9 +82,6 @@ public class BunsControl : MonoBehaviour
             //2.食材の親子関係を設置する（描画するため）
             //3.食材の角度を調整
             //4.このバンスにつける設定を食材コントロールに渡す
-
-
-            Debug.Log(collider.gameObject.GetComponent<IngrediantControl>().ingNo);
 
             //総管理に番号を渡す
             masterBurger.PlusIng(collider.gameObject.GetComponent<IngrediantControl>().ingNo);
