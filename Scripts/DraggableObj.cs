@@ -18,6 +18,8 @@ public class DraggableObj : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDr
     public GameObject center;
     public GameObject top;
 
+    public Image backgroundMask;
+
     //ドラッグできる長さ制限
     public float length;
 
@@ -31,10 +33,14 @@ public class DraggableObj : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDr
 
     //バンスの移動速度
     public float moveSpeed;
+
+    float tempCnt;
+    float slowFactor = 0.1f;
     
     //ドラッグ開始
     public void OnBeginDrag(PointerEventData eventData)
     {
+
         //ドラッグ開始
         //やること：
         //1.ハンバーガーを生成（上中下統括）
@@ -63,6 +69,8 @@ public class DraggableObj : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDr
         bottomDragging.GetComponent<BunsControl>().center = centerDragging;
         bottomDragging.GetComponent<BunsControl>().masterBurger = actBurger.GetComponent<HamburgerControl>();
 
+        tempCnt = 0.0f;
+
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -80,6 +88,15 @@ public class DraggableObj : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDr
         //トップとセンターの座標を指定
         centerDragging.transform.position = Vector2.Lerp(bottomDragging.transform.position, topDragging.transform.position, 0.5f);
         topDragging.transform.position = Vector3.Lerp(bottomDragging.transform.position,eventData.position,length);
+
+        //スローにする
+        Time.timeScale = Mathf.Lerp(1.0f, 0.2f, tempCnt);
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        tempCnt += slowFactor;
+
+        backgroundMask.color = new Color(0.0f,0.0f,0.0f,Mathf.Lerp(0.0f, 0.3f, tempCnt/2));
+
+        Debug.Log(Time.timeScale);
     }
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -96,6 +113,12 @@ public class DraggableObj : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDr
         bottomDragging.GetComponent<Rigidbody2D>().freezeRotation = true;
         bottomDragging.GetComponent<BunsControl>().isEndDrag = true;
         bottomDragging.GetComponent<BunsControl>().moveSpeed = moveSpeed;
+
+        Time.timeScale = 1.0f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+        backgroundMask.color = Color.clear;
+
     }
 }
 

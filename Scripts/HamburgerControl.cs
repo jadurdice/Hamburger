@@ -70,10 +70,19 @@ public class HamburgerControl : MonoBehaviour
         thisCenter.transform.eulerAngles = (new Vector3(0.0f, 0.0f, Mathf.Rad2Deg * angle-90));
         this.gameObject.transform.eulerAngles = (new Vector3(0.0f, 0.0f, Mathf.Rad2Deg * angle - 90));
 
+
+
         //完成カウンターしたら
         if (Time.time >= completeCnt + 1.0f)
         {
             GetComponent<MoveBurger>().Active(gotoDish);
+
+            if (Time.time >= completeCnt + 3.0f || this.transform.position.x < -50.0f)
+            {
+                masterOrder.score.scoreNum += ingrediantIncome.Count * 10;
+                Destroy(gameObject);
+            }
+
         }
         else
         {
@@ -83,8 +92,6 @@ public class HamburgerControl : MonoBehaviour
 
     void OnBecameInvisible()
     {
-        //見えなくなったら
-        Destroy(gameObject);
     }
 
     private void Update()
@@ -95,10 +102,6 @@ public class HamburgerControl : MonoBehaviour
             adjustAngle();
         }
 
-        if(this.gameObject.transform.position.x < -50　|| this.gameObject.transform.position.x > 1000)
-        {
-            Destroy(gameObject);
-        }
 
     }
 

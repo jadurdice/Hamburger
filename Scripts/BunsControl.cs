@@ -74,7 +74,7 @@ public class BunsControl : MonoBehaviour
 
         }
 
-        if (collider.transform.tag == "Ingredient" && collider.transform.parent.parent != masterBurger.transform)
+        if (collider.transform.tag == "Ingredient" && collider.transform.parent.parent != masterBurger.transform && collider.gameObject.GetComponent<IngrediantControl>().isBelongBuns == false)
         {
             //食材と接続、
             //やることは：
@@ -90,7 +90,8 @@ public class BunsControl : MonoBehaviour
             collider.transform.SetParent(center.transform);
 
             //食材の角度を調整
-            
+            collider.transform.eulerAngles = (new Vector3(0.0f, 0.0f, Mathf.Rad2Deg * angle - 90.0f));
+            collider.gameObject.GetComponent<Rigidbody2D>().freezeRotation = true;
 
             //このバンスにつける設定を食材コントロールに渡す
             collider.gameObject.GetComponent<IngrediantControl>().attach = this.gameObject;

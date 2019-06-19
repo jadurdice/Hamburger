@@ -16,14 +16,27 @@ public class IngrediantControl : MonoBehaviour
     //つけたバンスのGameObject
     public GameObject attach;
 
+    float timeCnt;
+
+    private void Start()
+    {
+        timeCnt = Time.time;
+    }
+
     private void Update()
     {
         if (isBelongBuns)
         {
             //バンスとついていく
             this.transform.position = this.transform.parent.position;
-            
 
+        }
+        else
+        {
+            if(Time.time > timeCnt + 10.0f)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

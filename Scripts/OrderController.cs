@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public class OrderController : MonoBehaviour
 {
-    //プレイヤーの完成バーガースクリプト参照
-    //public Humburger humburger;
-
 
     const int ONE_MATCH = 10;
     const int TWO_MATCH = 20;
-    const int THREE_MATCH = 30;
+    const int THREE_MATCH = 40;
 
     //スコアスクリプト参照
-    public Score score;
+    public ScoreAndTime score;
 
     float TimeCnt;
 
@@ -34,11 +31,17 @@ public class OrderController : MonoBehaviour
     //各注文票時間計測 時間経過でisOrderをfalse
     int[] time = new int[ORDER_NUM] { 1, 2, 3 };
 
+    public int playTime;
+
     //注文票の状態 falseになったら注文生成
     bool[] isOrder = new bool[ORDER_NUM] { false, false, false };
 
     public int IngrediantJudge(List<int> checkBurger)
     {
+        if(checkBurger.Count == 0)
+        {
+            return -1;
+        }
         for (int i = 0; i < 3; i++)
         {
             //判定用リスト生成
@@ -46,7 +49,11 @@ public class OrderController : MonoBehaviour
             var checkOrder = new List<int> { };
             //注文を代入、ソート
             checkOrder = new List<int>(orderList[i].orderNow);
- 
+
+            if (checkOrder.Count == 0)
+            {
+                continue;
+            }
             if (checkOrder.Count > checkBurger.Count)
             {
                 //先に個数チェック、注文数が多い場合絶対失敗→スキップ
@@ -90,7 +97,15 @@ public class OrderController : MonoBehaviour
             else
             {
                 //判定成功、返す
-
+                switch (orderList[i].orderNow.Count)
+                {
+                    case 1:
+                        playTime += 1; break;
+                    case 2:
+                        playTime += 2; break;
+                    case 3:
+                        playTime += 4; break;
+                }
                 return (i);
             }
         }
@@ -146,7 +161,8 @@ public class OrderController : MonoBehaviour
 
 
         orderList[slot].orderNow = new List<int>(orderGene);
-        
+        orderList[slot].textOrder(orderGene);
+
         orderList[slot].isIn = true;
     }
 
@@ -164,19 +180,37 @@ public class OrderController : MonoBehaviour
     void SetTimer(int orderSlot, int second)
     {
         time[orderSlot] += second;
+        orderList[orderSlot].time = second;
     }
 
     void TimeCount()
     {
-        TimeCnt += Time.deltaTime;
+        float realTime;
 
-        if (TimeCnt >= 1.0f)
+        realTime = Time.realtimeSinceStartup;
+        
+        if (realTime - TimeCnt > 1.0f)
         {
             //一秒経過
+            playTime -= 1;
+            if(playTime <= 0)
+            {
+                //ゲーム終了
+            }
+            score.timeNum = playTime;
 
             for (int i = 0; i < 3; i++)
             {
                 time[i] -= 1;
+
+                if (orderList[i].time <= 0)
+                {
+                    time[i] -= 10;
+                }
+                else
+                {
+                    orderList[i].time = time[i];
+                }
 
                 if (time[i] <= 0)
                 {
@@ -189,6 +223,7 @@ public class OrderController : MonoBehaviour
                         orderList[i].isOut = true;
 
                         SetTimer(i, LimitTime / 2);
+                        orderList[i].time = 0;
                     }
                     else
                     {
@@ -199,15 +234,16 @@ public class OrderController : MonoBehaviour
                     }
 
                 }
+
             }
 
-            TimeCnt = 0;
+            TimeCnt = Time.realtimeSinceStartup;
         }
     }
 
     private void Start()
     {
-
+        score.timeNum = playTime;
     }
 
     void Update()
