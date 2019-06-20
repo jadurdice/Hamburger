@@ -36,30 +36,33 @@ public class PopControl : MonoBehaviour
 
     void Update()
     {
-
-
-
-        nowTime = Time.time;
-
-        if (nowTime > timeCnt + 1.0f)
+        if (FindObjectOfType<OrderController>().isStart)
         {
-            int ran = Random.Range(0, 100);
+            nowTime = Time.time;
 
-            if (ran < 50)
+            if (nowTime > timeCnt + 1.0f)
             {
-                isReadyPop = true;
+                int ran = Random.Range(0, 100);
+
+                if (ran < 50)
+                {
+                    isReadyPop = true;
+                }
+
+                timeCnt = Time.time;
             }
 
-            timeCnt = Time.time;
+
+
+            if (isReadyPop)
+            {
+                PopIng();
+                isReadyPop = false;
+            }
         }
 
 
-
-        if (isReadyPop)
-        {
-            PopIng();
-            isReadyPop = false;
-        }
+       
 
     }
 }

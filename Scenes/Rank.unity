@@ -1060,7 +1060,7 @@ PrefabInstance:
     - target: {fileID: 4514941711807821910, guid: 054ccc03792361940b86d358e1aee3e6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -262.5
+      value: -89
       objectReference: {fileID: 0}
     - target: {fileID: 4514941711807821910, guid: 054ccc03792361940b86d358e1aee3e6,
         type: 3}
@@ -1241,7 +1241,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -497.74063, w: 0}
   m_textInfo:
     textComponent: {fileID: 1883914579}
     characterCount: 49

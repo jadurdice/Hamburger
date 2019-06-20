@@ -11,6 +11,8 @@ public class OrderController : MonoBehaviour
     //スコアスクリプト参照
     public ScoreAndTime score;
 
+    public Transition changer;
+
     float TimeCnt;
 
     const int ORDER_NUM = 3;//注文票数
@@ -33,14 +35,18 @@ public class OrderController : MonoBehaviour
 
     public int playTime;
 
+    public int extraTime;
+
     //注文票の状態 falseになったら注文生成
     bool[] isOrder = new bool[ORDER_NUM] { false, false, false };
+
+    public bool isStart;
 
 
 
     public int IngrediantJudge(List<int> checkBurger)
     {
-        if(checkBurger.Count == 0)
+        if (checkBurger.Count == 0)
         {
             return -1;
         }
@@ -90,7 +96,7 @@ public class OrderController : MonoBehaviour
                     break;
                 }
             }
-            
+
             if (j != checkOrder.Count)
             {
                 //判定失敗
@@ -122,7 +128,7 @@ public class OrderController : MonoBehaviour
         var orderGene = new List<int> { };
 
         //注文総数を確定
-        int orderMax = Random.Range(0, 4) ;
+        int orderMax = Random.Range(0, 4);
 
         //注文詳細生成
         int i = 0;
@@ -187,65 +193,98 @@ public class OrderController : MonoBehaviour
 
     void TimeCount()
     {
-        float realTime;
+        float realTime = 0;
 
         realTime = Time.realtimeSinceStartup;
         
-        if (realTime - TimeCnt > 1.0f)
+        realTime -= TimeCnt;
+
+       
+
+        if (realTime > 1.0f)
         {
             //一秒経過
-            playTime -= 1;
-            if(playTime <= 0)
+            TimeCnt = Time.realtimeSinceStartup;
+
+            if (!isStart)
             {
-                //ゲーム終了
+
+                extraTime += 1;
+                Debug.Log(extraTime);
+                if (extraTime >5)
+                {
+                    isStart = true;
+                }
+
             }
-            score.timeNum = playTime;
-
-            for (int i = 0; i < 3; i++)
+            else
             {
-                time[i] -= 1;
 
-                if (orderList[i].time <= 0)
+                
+                playTime -= 1;
+                if (playTime <= 0)
                 {
-                    time[i] -= 10;
-                }
-                else
-                {
-                    orderList[i].time = time[i];
-                }
+                    //ゲーム終了
+                    playTime = 0;
 
-                if (time[i] <= 0)
-                {
+                    extraTime += 1;
 
-                    if (isOrder[i])
+                    if(extraTime > 9)
                     {
-                        //オーダー時間切れ
-                        isOrder[i] = false;
-                        orderList[i].orderNow.Clear();
-                        orderList[i].isOut = true;
+                        changer.GoToRank();
+                    }
+                }
+                score.timeNum = playTime;
 
-                        SetTimer(i, LimitTime / 2);
-                        orderList[i].time = 0;
+                for (int i = 0; i < 3; i++)
+                {
+                    time[i] -= 1;
+
+                    if (orderList[i].time <= 0)
+                    {
+                        time[i] -= 10;
                     }
                     else
                     {
-                        //注文作成
-                        isOrder[i] = true;
-                        OrderGenerate(i);
-                        SetTimer(i, LimitTime);
+                        orderList[i].time = time[i];
+                    }
+
+                    if (time[i] <= 0)
+                    {
+
+                        if (isOrder[i])
+                        {
+                            //オーダー時間切れ
+                            isOrder[i] = false;
+                            orderList[i].orderNow.Clear();
+                            orderList[i].isOut = true;
+
+                            SetTimer(i, LimitTime / 2);
+                            orderList[i].time = 0;
+                        }
+                        else
+                        {
+                            //注文作成
+                            isOrder[i] = true;
+                            OrderGenerate(i);
+                            SetTimer(i, LimitTime);
+                        }
+
                     }
 
                 }
 
-            }
 
-            TimeCnt = Time.realtimeSinceStartup;
+            }
+            
         }
+        
     }
 
     private void Start()
     {
-        score.timeNum = playTime;
+        TimeCnt = Time.realtimeSinceStartup;
+       // debugSkipCnt();
     }
 
     void Update()
@@ -254,8 +293,9 @@ public class OrderController : MonoBehaviour
 
         //時間計測
         TimeCount();
+        score.timeNum = playTime;
 
-
+       
     }
 
     void debugOrder(List<int> order)
@@ -268,5 +308,10 @@ public class OrderController : MonoBehaviour
             debugstr = debugstr + i + ",";
         }
         Debug.Log(debugstr);
+    }
+    void debugSkipCnt()
+    {
+        extraTime = 5;
+        playTime = 10;
     }
 }

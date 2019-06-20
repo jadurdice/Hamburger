@@ -23,6 +23,7 @@ public class Transition : MonoBehaviour
     public void GoToPlay()
     {
         StartCoroutine(LoadScene("Play"));
+        ScoreAndTime.scoreToNext = 0;
     }
     public void GoToRank()
     {
