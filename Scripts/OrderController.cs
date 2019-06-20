@@ -36,6 +36,8 @@ public class OrderController : MonoBehaviour
     //注文票の状態 falseになったら注文生成
     bool[] isOrder = new bool[ORDER_NUM] { false, false, false };
 
+
+
     public int IngrediantJudge(List<int> checkBurger)
     {
         if(checkBurger.Count == 0)
@@ -248,6 +250,8 @@ public class OrderController : MonoBehaviour
 
     void Update()
     {
+
+
         //時間計測
         TimeCount();
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7828249031627515167}
   - component: {fileID: 7828249031627515166}
   - component: {fileID: 7828249031627515162}
+  - component: {fileID: 623922035330101167}
   m_Layer: 9
   m_Name: ingrediant (2)
   m_TagString: Ingredient
@@ -68,7 +69,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: d6355cd97d7a06549a61adda451ad23f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c6d327c48f835f843b20cfa60c0cc4c5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -105,7 +106,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7828249031627515164}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: bfee96970e87f72449a73a56ed1b1784, type: 2}
   m_IsTrigger: 0
@@ -139,3 +140,39 @@ MonoBehaviour:
   ingNo: 3
   isBelongBuns: 0
   attach: {fileID: 0}
+--- !u!60 &623922035330101167
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7828249031627515164}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -34.636353, y: -39.9834}
+      - {x: 71.47882, y: -32.882935}
+      - {x: 97.934204, y: -8.610107}
+      - {x: 76.65344, y: 33.36476}
+      - {x: 20.417053, y: 44.567307}
+      - {x: -40.10083, y: 38.906097}
+      - {x: -87.38855, y: 23.534256}
+      - {x: -89.95416, y: -14.169952}
+      - {x: -35.081787, y: -39.561554}
+      - {x: 0.58778536, y: -0.80901694}
+      - {x: 0.9510565, y: 0.30901712}
