@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PopControl : MonoBehaviour
 {
+    //0上1下2右3左
+    public int popPos;
+
     //発射口コントロール
     //食材を射出のスポーン地点
 
@@ -23,6 +26,10 @@ public class PopControl : MonoBehaviour
 
     float fallenSpeed = 20.0f;
 
+    float moveSpeed = 300.0f;
+
+
+
     void PopIng()
     {
         int tempNo = Random.Range(0, Ingrediant.Count);
@@ -33,6 +40,18 @@ public class PopControl : MonoBehaviour
 
     }
 
+    void DownSide() {
+        spawnIng.GetComponent<Rigidbody2D>().gravityScale = 0;
+        spawnIng.GetComponent<Rigidbody2D>().velocity = transform.up * moveSpeed;
+    }
+    void RightSide() {
+        spawnIng.GetComponent<Rigidbody2D>().gravityScale = 0;
+        spawnIng.GetComponent<Rigidbody2D>().velocity = transform.right * -moveSpeed;
+    }
+    void LeftSide() {
+        spawnIng.GetComponent<Rigidbody2D>().gravityScale = 0;
+        spawnIng.GetComponent<Rigidbody2D>().velocity = transform.right * moveSpeed;
+    }
 
     void Update()
     {
@@ -59,6 +78,18 @@ public class PopControl : MonoBehaviour
                 PopIng();
                 isReadyPop = false;
             }
+            switch (popPos) {
+                case 1:
+                    DownSide();
+                    break;
+                case 2:
+                    RightSide();
+                    break;
+                case 3:
+                    LeftSide();
+                    break;
+            }
+
         }
 
 

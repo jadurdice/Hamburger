@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4514578354528893226}
   - component: {fileID: 896984203488924540}
   - component: {fileID: 119833053123746810}
+  - component: {fileID: 3066897663197108749}
   m_Layer: 9
   m_Name: ingrediant
   m_TagString: Ingredient
@@ -83,7 +84,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: d6355cd97d7a06549a61adda451ad23f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 06f4d6b799903ad458d0ce623339862c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -120,7 +121,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880507423169267427}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: bfee96970e87f72449a73a56ed1b1784, type: 2}
   m_IsTrigger: 0
@@ -139,3 +140,49 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 198.6203, y: 100}
   m_EdgeRadius: 0
+--- !u!60 &3066897663197108749
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880507423169267427}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 1}
+      - {x: -0.95105654, y: 0.30901697}
+      - {x: 81.874146, y: 6.4791565}
+      - {x: 83.06766, y: -18.817406}
+      - {x: 72.453674, y: -33.17845}
+      - {x: 19.8143, y: -47.07408}
+      - {x: -49.396667, y: -39.527702}
+      - {x: -62.918518, y: -33.698452}
+      - {x: -78.086395, y: -24.390251}
+      - {x: -84.74057, y: -9.036034}
+      - {x: -82.85889, y: 2.776802}
+      - {x: -79.60373, y: 13.854347}
+      - {x: -71.32562, y: 24.995483}
+      - {x: -46.21591, y: 37.235046}
+      - {x: -12.377991, y: 43.38275}
+      - {x: 25.69986, y: 42.652863}
+      - {x: 61.00525, y: 32.511765}
+      - {x: 76.10388, y: 20.326767}
+      - {x: 81.84192, y: 7.1442337}
+      - {x: 0.58778536, y: -0.80901694}
+      - {x: 0.9510565, y: 0.30901712}
