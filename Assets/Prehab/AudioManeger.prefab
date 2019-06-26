@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8628169775029331557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8628169775029331558}
+  - component: {fileID: 8628169775029331559}
+  m_Layer: 5
+  m_Name: AudioManeger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8628169775029331558
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628169775029331557}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 960.7164, y: 540}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8628169775029331559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628169775029331557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010ac4c20d757574abba36704f86b8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: B_Title
+    clip: {fileID: 8300000, guid: 28e49570fb136fb4aaca230a56380578, type: 3}
+    volume: 0.3
+    pitch: 1.2
+    loop: 1
+    source: {fileID: 0}
+  - name: B_Play
+    clip: {fileID: 8300000, guid: 226f262a22ed7464db96b81d0280e638, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: B_Rank
+    clip: {fileID: 8300000, guid: 3be7b747a5d59a54b841e5745633b9e9, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_BurgerCom
+    clip: {fileID: 8300000, guid: 63eb00587fdfbac47bd794ff5e5bf618, type: 3}
+    volume: 1
+    pitch: 3
+    loop: 0
+    source: {fileID: 0}
+  - name: S_GetScore
+    clip: {fileID: 8300000, guid: c619d0e8449d41b4490b111e224abb31, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_OrderIn
+    clip: {fileID: 8300000, guid: 6b282255fb1e6a745ae8706e442312f4, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_OrderSolve
+    clip: {fileID: 8300000, guid: 80031f92789b0e54099b2ab25ab09f96, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_Shrink
+    clip: {fileID: 8300000, guid: 872db6495626e394b9d45f4231eac620, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_Stretch
+    clip: {fileID: 8300000, guid: d10026e37c85dfc40bb864228464bee0, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_CountDown
+    clip: {fileID: 8300000, guid: 7d9b7fb8e673e6a4d983371c13d63a92, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_clock
+    clip: {fileID: 8300000, guid: 2da1be12647f4c640bc7b686ffc2eeb0, type: 3}
+    volume: 1
+    pitch: 3
+    loop: 0
+    source: {fileID: 0}
+  - name: S_completeFall
+    clip: {fileID: 8300000, guid: 63eb00587fdfbac47bd794ff5e5bf618, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_loseScore
+    clip: {fileID: 8300000, guid: c3eaadd1b9f4f294aa9760aa1c9e2b32, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_IngPop
+    clip: {fileID: 8300000, guid: 4c67fdeca99cb52498bf0d50690e0746, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_systemClick
+    clip: {fileID: 8300000, guid: 5b1f6b12a6ac5e543a22793426226e6b, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_systemOn
+    clip: {fileID: 8300000, guid: 947f4a0793475754b9fad0242e99b02e, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: S_Finish
+    clip: {fileID: 8300000, guid: 6328016edae1ea140a5dec878f4dc98f, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  fadeOutFlag: 000000
